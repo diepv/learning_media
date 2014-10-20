@@ -1,0 +1,106 @@
+@font-face {
+    font-family: "Avenir";
+    src: url(http://127.0.0.1/learning_media/css/avenir.tff) format("truetype");
+}
+body{
+	font-family:Avenir;
+	color:white;
+	font-size:2em;
+}
+ul#mainNav{
+	display:flex;
+	width:100%;
+	height:12%;
+	margin:0;
+	padding:0;
+}
+ul#mainNav li{
+	flex-grow:1;
+	list-style-type:none;
+	border:1px lightgray solid;
+	display:inline;
+	position:relative;
+	margin:0;
+	padding:5px;
+	text-align:center;
+	word-wrap:break-word;
+}
+#ampersand{
+	font-size:.7em;
+}
+.mutationList{
+	display:none;
+	position:relative;
+	width:100%;
+	height:10%;
+	font-size:.5em;
+	text-align:center;
+	vertical-align:middle;
+}
+.blocklist{
+	display:flex;
+	width:100%;
+	height:100%;
+	position:relative;
+	margin:0;
+	padding:0;
+}
+.blocklist li{
+	flex-grow:1;
+	padding:0px;
+	height:100%;
+	background-color:white;
+	line-height:40px;
+}
+li{
+	list-style-type:none;
+	display:inline;
+	border:1px lightgray solid;
+}
+#programming-actions-container{
+	width:100%;
+	height:100%;
+	background-color:lightgray;
+}
+#object-curation-container{
+	background-color:rgb(242,242,242);
+	width:40%;
+	height:100%;
+	float:left;
+}
+#programming-script-container{
+	background-color:rgb(240,245,245);
+	width:59%;
+	float:right;
+	height:100%;
+}
+/*Color scheme for all programming tabs: 
+object: rgb(128,153,102)
+events: rgb(202,175,175)
+conditional: rgb(139,177,177)
+parameters: rgb(102,128,153)
+operators: rgb(128,102,153)
+*/
+#hide{
+	background-color:rgb(202, 202, 175);
+}
+/*STYLING SPECIFIC TO THE OBJECT FILTERS AND TAB*/
+li#fetchObjects, li.objectBlock{
+	background-color:rgb(128, 153, 102);
+}
+/*STYLING SPECIFIC TO THE PARAMETER FILTERS AND TAB*/
+li#fetchParameters, li.parameterBlock{
+	background-color:rgb(102, 128, 153);
+}
+/*STYLING SPECIFIC TO THE EVENTS FILTERS AND TAB*/
+li#fetchEvents, li.eventBlock{
+	background-color:rgb(202, 153, 102);
+}
+/*STYLING SPECIFIC TO THE CONDITOINALS FILTERS AND TAB*/
+li#fetchConditionals, li.conditionalBlock{
+	background-color:rgb(139, 177, 177);
+}
+/*STYLING SPECIFIC TO THE OPERATORS FILTERS AND TAB*/
+li#fetchOperators, li.operatorBlock{
+	background-color:rgb(128, 102, 153);
+}

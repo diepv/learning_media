@@ -1,0 +1,58 @@
+ <html>
+ <head>
+	   <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"> -->
+	<script type='text/javascript' src='js/jquery-2.1.1.min.js'></script>
+	<script type='text/javascript' src='js/jquery-ui/jquery-ui.min.js'></script>
+	
+		<script type='text/javascript' src='js/filters.js'></script>
+	<script type='text/javascript' src='js/MediaObject.js'></script>
+	<script type='text/javascript' src='js/blocks-container-manager.js'></script>
+	<script type='text/javascript' src='js/programming-container-manager.js'></script>
+	<script type='text/javascript' src='js/object-curation-manager.js'></script>
+	  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel='stylesheet'type='text/css' href='css/languageLists.css'></link>
+	<link rel='stylesheet'type='text/css' href='css/object-curation-container.css'></link>
+ </head>
+ <body>
+	 <ul id="mainNav">
+		 <li id='fetchObjects'>OBJECTS</li>
+		 <li id='fetchParameters'>PARAMETERS</li>
+		 <li id='fetchConditionals'>CONDITIONALS<span id='ampersand'>&</span>LOOPS</li>
+		 <li id='fetchEvents'>EVENTS</li>
+		 <li id='fetchOperators'>OPERATORS</li>
+		 <li id='hide'>HIDE OPTIONS</li>
+	 </ul>
+		<div id="mutationArea">
+			
+			<div id="object-block" class="mutationList">
+			</div>
+
+			<div id="parameter-block" class="mutationList">
+			</div>
+
+			<div id="conditional-loop-block" class="mutationList">
+			</div>
+			
+			<div id="event-block" class="mutationList">
+			</div>
+			
+			<div id="operator-block" class="mutationList">
+			</div>
+		</div>
+	 
+	 <div id="programming-actions-container">
+		 <div id="object-curation-container">
+			 <div id='grab-title-bar' class='grabbing-container'>OBJECTS:</div>
+		 	<ul id="object-temp-list" class="object-temp-list-ul">
+			</ul>
+		 </div>
+		 <div id="programming-script-container">
+			 <div id='programming-title-bar'>PROGRAMMING BAR:</div>
+		 	<ul id="programming-final-list">
+		 		<li id='programming-final-list-default'></li>
+		 	</ul>
+		 </div>
+ </div>
+			 
+ </body>
+ </html>

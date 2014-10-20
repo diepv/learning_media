@@ -1,0 +1,134 @@
+#grab-title-bar{
+	color:white
+	font-size:.8em;
+	height:40px;
+	text-align:center;
+	background-color:rgb(179, 194, 163);
+}
+#programming-title-bar{
+	color:white
+	font-size:.8em;
+	height:40px;
+	text-align:center;
+	background-color:rgb(179, 194, 163);
+/*	border-bottom:1px rgb(128, 153, 102) solid;*/
+}
+#object-temp-list{
+	position:relative;
+	height:100%;
+	width:90%;
+	display:block;
+	list-style-type:none;
+}
+#object-temp-list li{
+	width:100%;
+	list-style-type:none;
+	display:block;
+}
+.object-script-ul, .nonobject-script-ul{
+/*	display:flex;*/
+	position:relative;
+	max-width:500px;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+.nonobject-script-li{
+	position:relative;
+	min-width:35px;
+}
+.object-script-li{
+	position:relative;
+	font-size:14px;
+	display:block;
+	list-style-type:none;
+	float:left;
+	width:100%;
+}
+.objectScriptTitle{
+	background-color:black;
+	display:block;
+}
+.objectInput{
+	background-color:black;
+	color:lightgray;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	border:none;
+	font-size:15px;
+	font-style:italic;
+	width:100%;
+}
+.countInput{
+	background-color:transparent;
+	color:lightgray;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	border:none;
+	font-size:15px;
+	width:100%;
+	bottom:0;
+}
+/*STYLING FOR THE PROGRAMMING BAR LISTS*/
+li#programming-final-list-default{
+	background-color:blue;
+	width:100%;
+	height:200px;
+	position:relative;
+	display:block;
+	list-style-type:none;
+	font-size:16px;
+	text-align:center;
+}
+#programming-final-list{
+	width:100%;
+	list-style-type:none;
+	display:flex;
+	position:relative;
+	padding:15px;
+}
+.programming-final-list-LI{
+	position:relative;
+	display:inline;
+	list-style-type:none;
+	font-size:16px;
+	text-align:center;
+}
+#programming-actions-container{
+	width:100%;
+	height:100%;
+	background-color:lightgray;
+}
+#programming-script-container{
+	background-color:rgb(240,245,245);
+	width:59%;
+	float:right;
+	height:100%;
+}
+/*STYLING FOR OBJECT CURATION CONTAINER ITEMS*/
+#object-curation-container{
+	background-color:rgb(242,242,242);
+	width:40%;
+	height:100%;
+	float:left;
+}
+
+#resultsContainer{
+	width:100%;
+	height:100%;
+	background-color:black;
+	color:white;
+	font-size:14px;
+}
+.videoDiv{
+	display: inline-block;
+	width: 150px;
+	position: relative;
+	border: 2px white solid;
+	height: 140px;
+	vertical-align: top;
+	margin: 2px;
+	}
+}
