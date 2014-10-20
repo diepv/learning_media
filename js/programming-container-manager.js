@@ -235,10 +235,16 @@ $("#programming-script-container").on('click',function(e){
 	//check if target is equal to programmign script container.
 	if($(e.target).attr('id').indexOf("programming-script-container")>-1){
 		//if yes, we want to create a new li for add future dropped items 
-		
+		var listItemForDropping = document.createElement('LI');
+		listItemForDropping.setAttribute("id","dropBlocksHere");
+		$("#programming-final-list").append($listItemForDropping);
 	}
 })
 $("#programming-script-container").droppable({drop:function(e,ui){
+	//--------TESTING NEW SYSTEM OF ADDING LINES
+	
+	
+	//--------OLD: 
 	if($(e.target).attr('id').indexOf("programming-final-list-default")>-1){
 		$(e.target).attr('class','programming-final-list-LI');
 		$(e.target).attr('id','');
@@ -250,59 +256,14 @@ $("#programming-script-container").droppable({drop:function(e,ui){
 		
 	}
 	if($(ui.helper).attr('class').indexOf('grabbing-container')>-1){
-		//1. grab info from the object-temp-list and put into the programm script container in the new "ObjectForScript" ul
-		var newlist = createObjectForScript();
-		$(ui.helper).fadeOut(500,function(){
-			$(ui.helper).remove();
-		})
-		var newlistHeight = parseInt($(newlist).css('height').replace('px',''));
-		var li = document.createElement('LI');
-		li.setAttribute('class','programming-final-list-LI');
-		li.setAttribute('height',newlistHeight);
-		li.appendChild(newlist);
-		$("#programming-final-list").append($(li));
-		var pflHeight = newlistHeight+(newlistHeight/10);
-		$("#programming-final-list").css('height',pflHeight);
-		// $("#programming-final-list").droppable();
-		// $("#programming-final-list").sortable();
-		//2. create a new grab title bar and slide in object-curation-container
-		replaceGrabBar();
-		emptyObjectCurationList();
-		
-		if($(ui.helper).attr('class').indexOf("object-temp-list-ul")>-1){
-			//perform backend search & return results into object-curation-container
-			console.log($(ui.helper));
-			// returnResults(ui.helper);
-			// reformObjectCurationContainer();
-			// var objectBlock = document.createElement("LI");
-			// objectBlock.setAttribute('class','programObject');
-		
-		}
+		addObjectToProgramming(e,ui);
 	}//end if this is a grabbing container being dropped
 	else{
 		if($(ui.helper).attr('class').indexOf('programming-final-list-LI')>-1){
 			//just moving shit around
 		}else{
 			//this is a conditional, etc. 
-			console.log("nonobject dopped");
-			console.log($(e.target));
-			var li = document.createElement('LI');
-			li.setAttribute('class','programming-final-list-LI nonobject-script-li');
-			if($(ui.helper).html()=="HAS A COUNT OF"){
-				console.log("THIS IS COUNT!");
-				var input = document.createElement("input");
-				$(input).attr('name','countInput');
-				$(input).attr('class','countInput');
-				$(input).attr('type','text');
-				$(input).attr('value','type here');
-
-			}
-			$(li).html($(ui.helper).html());
-			$(li).append($(input));
-			$(li).css('background-color',$(ui.helper).css('background-color'));
-			var programmingFinalListHeight = $("#programming-final-list").css('height');
-			$(li).css('height',programmingFinalListHeight);
-			$("#programming-final-list").append($(li));
+			addNonObjectToProgramming(e,ui);
 		}
 	}
 }})//end droppable programming script container
@@ -331,6 +292,55 @@ $("#programming-title-bar").on('click', function(){
 // 	return newBlockList;
 // }
 // 
+function addNonObjectToProgramming(e,ui){
+	var li = document.createElement('LI');
+	li.setAttribute('class','programming-final-list-LI nonobject-script-li');
+	if($(ui.helper).html()=="HAS A COUNT OF"){
+		console.log("THIS IS COUNT!");
+		var input = document.createElement("input");
+		$(input).attr('name','countInput');
+		$(input).attr('class','countInput');
+		$(input).attr('type','text');
+		$(input).attr('value','type here');
+
+	}
+	$(li).html($(ui.helper).html());
+	$(li).append($(input));
+	$(li).css('background-color',$(ui.helper).css('background-color'));
+	var programmingFinalListHeight = $("#programming-final-list").css('height');
+	$(li).css('height',programmingFinalListHeight);
+	$("#programming-final-list").append($(li));
+}
+function addObjectToProgramming(e,ui){
+	//1. grab info from the object-temp-list and put into the programm script container in the new "ObjectForScript" ul
+	var newlist = createObjectForScript();
+	$(ui.helper).fadeOut(500,function(){
+		$(ui.helper).remove();
+	})
+	var newlistHeight = parseInt($(newlist).css('height').replace('px',''));
+	var li = document.createElement('LI');
+	li.setAttribute('class','programming-final-list-LI');
+	li.setAttribute('height',newlistHeight);
+	li.appendChild(newlist);
+	$("#programming-final-list").append($(li));
+	var pflHeight = newlistHeight+(newlistHeight/10);
+	$("#programming-final-list").css('height',pflHeight);
+	// $("#programming-final-list").droppable();
+	// $("#programming-final-list").sortable();
+	//2. create a new grab title bar and slide in object-curation-container
+	replaceGrabBar();
+	emptyObjectCurationList();
+	
+	if($(ui.helper).attr('class').indexOf("object-temp-list-ul")>-1){
+		//perform backend search & return results into object-curation-container
+		console.log($(ui.helper));
+		// returnResults(ui.helper);
+		// reformObjectCurationContainer();
+		// var objectBlock = document.createElement("LI");
+		// objectBlock.setAttribute('class','programObject');
+	
+	}
+}
 function createObjectForScript(){
 	var tempList = $("#object-temp-list");
 	
