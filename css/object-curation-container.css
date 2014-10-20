@@ -25,17 +25,30 @@
 	list-style-type:none;
 	display:block;
 }
-.object-script-ul, .nonobject-script-ul{
+.object-script-ul{
 /*	display:flex;*/
 	position:relative;
 	max-width:500px;
 	list-style-type:none;
 	margin:0;
 	padding:0;
+	display:inline-block;
+}
+.nonobject-script-ul{
+	position:relative;
+	max-width:500px;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	display:inline-block;
 }
 .nonobject-script-li{
 	position:relative;
-	min-width:35px;
+	font-size:14px;
+	display:block;
+	list-style-type:none;
+	float:left;
+	width:100%;
 }
 .object-script-li{
 	position:relative;
@@ -85,7 +98,7 @@ li#programming-final-list-default{
 #programming-final-list{
 	width:100%;
 	list-style-type:none;
-	display:flex;
+	display:block;
 	position:relative;
 	padding:15px;
 }
@@ -131,4 +144,9 @@ li#programming-final-list-default{
 	vertical-align: top;
 	margin: 2px;
 	}
+/*TESTING*/
+
+.ul-div-wrapper{
+	display:inline-block;
+	position:relative;
 }

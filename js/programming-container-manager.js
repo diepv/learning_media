@@ -198,12 +198,12 @@ function toggleVisibility(elemId,clickedElemId){
 //DROPPABLES AND DRAGGABLES
 $("#object-temp-list").sortable();
 $("#object-temp-list").droppable({drop:function(e,ui){
-	console.log('dropped in object-temp-list')
+	console.log('dropped in object-temp-list');
 	var itemDropped = ui.helper;
 	console.log($(itemDropped));
 	//ONLY ACCEPT .objectBlock and .parameterBlock divs 
 	if($(itemDropped).attr('class').indexOf("dropped")>-1){
-		$(ui.helper).disable();
+
 	}else{
 		if($(itemDropped).attr('class').indexOf("objectBlock")>-1 || $(itemDropped).attr('class').indexOf("parameterBlock")>-1){
 			//create the list item to append toe ht object-temp-list, then make it draggable but only droppable with in the list itself. do not clone.
@@ -232,18 +232,31 @@ $("#grab-title-bar").draggable({start:function(e,ui){
 	
 }});
 $("#programming-script-container").on('click',function(e){
+	console.log("the programming script container has been clicked, dear one.");
 	//check if target is equal to programmign script container.
 	if($(e.target).attr('id').indexOf("programming-script-container")>-1){
-		//if yes, we want to create a new li for add future dropped items 
+		console.log("you have been clicking the programming script container for sure, little one.");
+		//if yes, we want to create a new li for add future dropped items
+		$("#dropBlocksHere").removeAttr("id"); 
 		var listItemForDropping = document.createElement('LI');
 		listItemForDropping.setAttribute("id","dropBlocksHere");
-		$("#programming-final-list").append($listItemForDropping);
+		$("#programming-final-list").append($(listItemForDropping));
+	}else{
+		if($(e.target).attr('id').indexOf('dropBlocksHere')>-1){
+			console.log("hun, you're clicking the same container. try another one...");
+		}else{
+			$(e.target).css("border","3px rgb(50,50,100) solid");
+			$("#dropBlocksHere").removeAttr("id");
+			$(e.target).attr('id','dropBlocksHere');
+		}
 	}
-})
+});
+
 $("#programming-script-container").droppable({drop:function(e,ui){
 	//--------TESTING NEW SYSTEM OF ADDING LINES
 	
-	
+	console.log("HERE'S WHAT I DROPPED ON PROGRAMMING SCRIPT CONTAINER:");
+	console.log(ui.helper);
 	//--------OLD: 
 	if($(e.target).attr('id').indexOf("programming-final-list-default")>-1){
 		$(e.target).attr('class','programming-final-list-LI');
@@ -256,17 +269,19 @@ $("#programming-script-container").droppable({drop:function(e,ui){
 		
 	}
 	if($(ui.helper).attr('class').indexOf('grabbing-container')>-1){
-		addObjectToProgramming(e,ui);
+		addObjectToProgramming(e,ui, "#dropBlocksHere");
 	}//end if this is a grabbing container being dropped
 	else{
-		if($(ui.helper).attr('class').indexOf('programming-final-list-LI')>-1){
+		if($(ui.helper).attr('class').indexOf('ul-div-wrapper')>-1){
+		// if($(ui.helper).attr('class').indexOf('nonobject-script-ul')>-1 || $(ui.helper).attr('class').indexOf('object-script-ul')>-1){
 			//just moving shit around
 		}else{
 			//this is a conditional, etc. 
-			addNonObjectToProgramming(e,ui);
+			addNonObjectToProgramming(e,ui,"#dropBlocksHere");
 		}
 	}
 }})//end droppable programming script container
+
 $("#programming-title-bar").on('click', function(){
 	var keywords = "Robin Williams";
 	var div = document.createElement('DIV');
@@ -275,7 +290,9 @@ $("#programming-title-bar").on('click', function(){
 	$(div).prependTo($("#object-curation-container"));
 	returnResults(keywords);
 })
-	$("#programming-final-list").sortable();
+	$(".ul-div-wrapper").sortable({sort:function(e,ui){
+		console.log('sorting');
+	}});
 
 // function createGenericBlockForScript(block){
 // 	var text = $(block).html();
@@ -292,9 +309,15 @@ $("#programming-title-bar").on('click', function(){
 // 	return newBlockList;
 // }
 // 
-function addNonObjectToProgramming(e,ui){
+function addNonObjectToProgramming(e,ui,addToMe){
+	//TESTING
+	var divvy = document.createElement('DIV');
+	divvy.setAttribute('class',"ul-div-wrapper");
+	//END TESTING
+	var ul = document.createElement('UL');
+	ul.setAttribute("class","nonobject-script-ul");
 	var li = document.createElement('LI');
-	li.setAttribute('class','programming-final-list-LI nonobject-script-li');
+	li.setAttribute('class','nonobject-script-li');
 	if($(ui.helper).html()=="HAS A COUNT OF"){
 		console.log("THIS IS COUNT!");
 		var input = document.createElement("input");
@@ -307,29 +330,48 @@ function addNonObjectToProgramming(e,ui){
 	$(li).html($(ui.helper).html());
 	$(li).append($(input));
 	$(li).css('background-color',$(ui.helper).css('background-color'));
-	var programmingFinalListHeight = $("#programming-final-list").css('height');
+	var programmingFinalListHeightItem = maxHeight("#dropBlocksHere");// $(addToMe).children().css('height');
+	var programmingFinalListHeight = parseInt(programmingFinalListHeightItem.css('height').replace('px',''));
+	// var programmingFinalListHeight = parseInt(programmingFinalListHeightItem.css('height').replace('px',''))+(2*$(".object-script-li").length);
+	console.log("new height:"+programmingFinalListHeight);
+	$(ul).css("height",programmingFinalListHeight);
 	$(li).css('height',programmingFinalListHeight);
-	$("#programming-final-list").append($(li));
+	$(ul).append($(li));
+	// $(addToMe).append($(ul)); //TESTING- commented out
+	//TESTING
+	$(divvy).append($(ul));
+	$(addToMe).append($(divvy));
+	//END  TESTING
 }
-function addObjectToProgramming(e,ui){
+function addObjectToProgramming(e,ui, addToMe){
+	//TESTING
+	var divvy = document.createElement('DIV');
+	divvy.setAttribute('class','ul-div-wrapper');
+	//END TESTING
 	//1. grab info from the object-temp-list and put into the programm script container in the new "ObjectForScript" ul
 	var newlist = createObjectForScript();
 	$(ui.helper).fadeOut(500,function(){
 		$(ui.helper).remove();
 	})
 	var newlistHeight = parseInt($(newlist).css('height').replace('px',''));
-	var li = document.createElement('LI');
-	li.setAttribute('class','programming-final-list-LI');
-	li.setAttribute('height',newlistHeight);
-	li.appendChild(newlist);
-	$("#programming-final-list").append($(li));
+	// var li = document.createElement('LI');
+	// li.setAttribute('class','programming-final-list-LI');
+	// li.setAttribute('height',newlistHeight);
+	// li.appendChild(newlist);
+	// $(addToMe).append($(li));
+	//TESTING
+	$(divvy).append(newlist);
+	$(addToMe).append($(divvy));
+	//END TESTING
+	// $(addToMe).append(newlist); //TESTINg-commented out 
 	var pflHeight = newlistHeight+(newlistHeight/10);
-	$("#programming-final-list").css('height',pflHeight);
+	$(addToMe).css('height',pflHeight);
 	// $("#programming-final-list").droppable();
 	// $("#programming-final-list").sortable();
 	//2. create a new grab title bar and slide in object-curation-container
 	replaceGrabBar();
 	emptyObjectCurationList();
+
 	
 	if($(ui.helper).attr('class').indexOf("object-temp-list-ul")>-1){
 		//perform backend search & return results into object-curation-container
@@ -346,7 +388,8 @@ function createObjectForScript(){
 	
 	var newList = document.createElement('UL');
 	$(newList).attr('class','object-script-ul');
-	$(newList).css('height',parseInt(tempList.children('li').length+1) * 20);
+	var newListHeight = (parseInt(tempList.children('li').length+1) * 20)+(2*tempList.children('li').length);
+	$(newList).css('height',newListHeight);
 	// $(newList).css('width',"30%");
 	$(newList).append("<li class='object-script-li objectScriptTitle'><input class='objectInput' value='NAME THIS OBJECT'></input></li>")
 
@@ -419,4 +462,17 @@ function replaceGrabBar(){
 function emptyObjectCurationList(){
 	$("#object-temp-list").children().fadeOut(300, function(){$("#object-temp-list").children().remove();});
 }
+var maxHeight = function(elementSelector){
+	var highest = null;
+	var hi = 0;
+	$(elementSelector).find("ul").each(function(){
+	  var h = $(this).height();
+	  if(h > hi){
+	     hi = h;
+	     highest = $(this);  
+	  }    
+	});
+	return highest;
+}
+
 })//end documen.tready
