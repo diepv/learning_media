@@ -1,0 +1,49 @@
+<html>
+<head>
+	<script type='text/javascript' src='../js/jquery-2.1.1.min.js'></script>
+	<script type='text/javascript' src='../js/jquery-ui/jquery-ui.min.js'></script>
+	<script type='text/javascript' src='../js/jquery-scrollTo/jquery.scrollTo.min.js'></script>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="js/filtersList.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/editor.js"></script>
+	<link rel='stylesheet'type='text/css' href='css/main.css'></link>
+	<link rel='stylesheet'type='text/css' href='css/sidebar.css'></link>
+	<link rel='stylesheet'type='text/css' href='css/programmingarea.css'></link>
+</head>
+<body>
+	<div id='containing-div'>
+	<div id='side-bar-options'>
+		<ul id='options-list'>
+		</ul>
+	</div>
+	
+	<div id='main-programming-area' class='programming-area'>
+		<div id='top-bar'>
+			<form id='title-bar' class='top-bar-form'>
+				<input type='text' id='title-input' value='Untitled'></input>
+			</form>
+			<form id='controls-bar' class='top-bar-form'>
+				<input type='button' id='save-script-button' value="SAVE"></input>
+				<input type='button' id='delete-script-button' value='DELETE'></input>
+				<label id='run-now-label'>RUN SCRIPT: </label>
+				<select name='run-drop-down' id='run-drop-down-menu'>
+				  <option id='run-now' value="NOW">NOW</option>
+				  <option id='run-only-once' value="AT DATE:">ONLY ONCE NOW</option>
+				  <option id='run-at-date-input' value="AT DATE:">FOREVER, BEGINNING ON:</option>
+					<!-- <input  value="date"></input> -->
+				</select>
+				<input type='button' id='run-script-button' value="RUN"></input>
+				<div id='calendar'>
+				</div>
+			</form>
+			
+		</div>
+		<div id='editor'>
+		</div>
+	</div>
+</div>
+	
+	
+</body>
+</html>

@@ -2,7 +2,8 @@ $(document).ready(function(){
 createBlocks();
 $("#mutationArea").hide();
 $(".mutationList").css('display','none');
-
+var db = "http://vivian.media.mit.edu:4000/";
+// var db = "http://localhost:4000/";
 function createBlocks(){
 	$("div.mutationList").append("<ul></ul>");
 	$(".mutationList").hide();
@@ -16,13 +17,20 @@ function createBlocks(){
 	$("#conditional-loop-block ul").attr('class','blocklist')
 	$("#operator-block ul").attr("id","operator-block-list"); 
 	$("#operator-block ul").attr("class","blocklist"); 
+	$("#properties-block ul").attr("id","properties-block-list"); 
+	$("#properties-block ul").attr("class","blocklist"); 
 	
 	for(var i = 0; i<objects.length; i++){
 		createFilterBlocks(objects,i,"objectBlock","object-block-list");
+		console.log('fetchObjects width adjustment:')
+		console.log(parseInt($("#grab-title-bar").css('width')));
+		$("#fetchObjects").css('width',screen.width*.145);
 	}
 	
 	for(var i = 0; i<parameters.length; i++){
 		createFilterBlocks(parameters,i,"parameterBlock","parameter-block-list");
+		$("#fetchParameters").css('width',screen.width*.145);
+		
 	}
 	
 	for(var i = 0; i<events.length; i++){
@@ -35,6 +43,10 @@ function createBlocks(){
 	
 	for(var i = 0; i<operators.length; i++){
 		createFilterBlocks(operators,i,"operatorBlock","operator-block-list");
+	}
+	
+	for(var i = 0; i<propertiesOfObjects.length; i++){
+		createFilterBlocks(propertiesOfObjects,i,"propertiesBlock","properties-block-list");
 	}
 $(".blocklist").children().draggable({helper:'clone',cursorAt: {left:30, top:70},drag:function(e,ui){
 
@@ -58,19 +70,29 @@ function createFilterBlocks(category,i,classname,tableId){
 	var controlName;
 	var controlChildren;
 	var children =false;
-	if(e.hasOwnProperty("name")){
-		controlName = e.name.toUpperCase();
-		children = true;
-		controlChildren = e.children;
+	if(e.hasOwnProperty("children")){
+		if(e.children!=="none"){
+
+			controlName = e.name.toUpperCase();
+			children = true;
+			controlChildren = e.children;
+			
+		}else{
+			controlName = e.name.toUpperCase();
+		}	
 	}else{
 		controlName = e.toUpperCase();
 	}
+		//JUST FOR SELENA, ROBIN WILLIAMS, BLAKE LIVELY
 
 	// console.log(controlChildren);
 	var thisTableCell = document.createElement("li");
 	thisTableCell.setAttribute("class",classname);
 	thisTableCell.setAttribute("id",""+classname+"-"+i);
 	thisTableCell.innerHTML = controlName;
+	if(controlName == 'BLAKE LIVELY' || controlName=="ROBIN WILLIAMS" || controlName=="SELENA GOMEZ"){
+		$(thisTableCell).html("<span class='trending'>TRENDING:</span><span class='trendingName'> "+controlName+"</span>");
+	}
 	
 	if(children==false){
 		thisTableCell.setAttribute("class",classname);
@@ -79,13 +101,20 @@ function createFilterBlocks(category,i,classname,tableId){
 		thisTableCell.dataset.childrenIndex = i;
 	}
 	$("#"+tableId).append($(thisTableCell));
+	
+
+
 }
 
 function clickBlockHandler(block, titles,tableId,classname,prependDivId,hideTableId){
+	var oldColor;
 	if($("#secondaryList").length>0){
+		console.log("found secondarylist:");
+		console.log($('#secondaryList').length);
 		$("#secondaryList").remove();
 	}
 	if($(block).attr('class').indexOf("hasChildren")>-1){
+		oldColor = $(block).css('background-color');
 		$(block).css('background-color', 'rgb(50, 110, 250)');
 		var index = document.getElementById($(block).attr('id')).dataset.childrenIndex;
 		var newFilterTitles = titles[index].children;
@@ -120,6 +149,12 @@ function clickBlockHandler(block, titles,tableId,classname,prependDivId,hideTabl
 		// $("#"+tableId+" ."+classname).draggable({helper:'clone',appendTo:$("#dropMe")});
 		$(secondaryList).children().draggable({helper:'clone'});
 	}
+	$(".originalCell").on('click', function(e){
+		$('#secondaryList').remove();
+		$(block).parent().fadeIn(1000);
+		$(block).css("background-color",oldColor);
+		// $(".originalCell").removeClass("originalCell");
+	})
 }
 
 
@@ -133,6 +168,12 @@ $(".hasChildren").on('click', function(e){
 	}
 });
 
+$("#trash").droppable({drop:function(e,ui){
+			$(ui.helper).remove();
+	$(ui.helper).fadeOut(300,function(){
+
+	})
+}})
 $("#mainNav li").on('click', function(e){
 	var targetID = $(e.target).attr('id');
 	var opacity = $("#"+targetID).css('opacity');
@@ -152,10 +193,9 @@ $("#mainNav li").on('click', function(e){
 	case "fetchOperators":
 		toggleVisibility("operator-block",targetID);
 		break;
-	case "hide":
-		$("#mutationArea").hide();
-		$("#mutationArea").children().hide();
-		$("#mainNav li").css('opacity',1.0);
+	case "fetchProperties":
+		toggleVisibility("properties-block",targetID);
+		break;
 		break;
 	}
 
@@ -164,20 +204,25 @@ $("#mainNav li").on('click', function(e){
 function toggleVisibility(elemId,clickedElemId){
 	if($("#"+clickedElemId).css('opacity')<1.0){
 		console.log('opacity is less than 1');
-		$("#mutationArea").show();
+					$("#secondaryList").remove();//MUST REMOVE IF WE"RE HIDING EVERYHINg"
+		$("#mutationArea").hide();
 		$("#mutationArea").children().hide();
+		$("#mutationArea").show()
 		$("#"+elemId).show();
 		$("#"+elemId).children().show();	
 		$("#"+clickedElemId).css("opacity",1);
 		$("#"+clickedElemId).siblings().animate({opacity:.3},500);
 	}else{
 		if($("#mutationArea").css('display')!=="none"){
-			console.log("mutationarea dispaly is not none");
+			console.log("mutationarea dispaly is visible");
 			// $("#mutationArea").show();
 			// $("#"+elemId).show();
 			// $("#"+elemId).children().show();
+			$("#secondaryList").remove();//MUST REMOVE IF WE"RE HIDING EVERYHINg"
 			$("#mutationArea").hide();
 			$(".mutationList").children().hide();
+			$("#"+elemId).hide();
+			$("#"+elemId).children().hide();	
 			console.log("supposedly mtuation area...");
 			$("#"+clickedElemId).siblings().animate({opacity:1.0},500);
 			// $("#"+clickedElemId).siblings().animate({opacity:.3},500);
@@ -207,6 +252,7 @@ $("#object-temp-list").droppable({drop:function(e,ui){
 	}else{
 		if($(itemDropped).attr('class').indexOf("objectBlock")>-1 || $(itemDropped).attr('class').indexOf("parameterBlock")>-1){
 			//create the list item to append toe ht object-temp-list, then make it draggable but only droppable with in the list itself. do not clone.
+			$(".fa").show();
 			console.log($(itemDropped).attr('class').indexOf("objectBlock")); 
 			var newLI = createNewLI(itemDropped);
 			$(ui.helper).remove();
@@ -233,28 +279,46 @@ $("#grab-title-bar").draggable({start:function(e,ui){
 }});
 $("#programming-script-container").on('click',function(e){
 	console.log("the programming script container has been clicked, dear one.");
+	console.log(e.target);
 	//check if target is equal to programmign script container.
-	if($(e.target).attr('id').indexOf("programming-script-container")>-1){
-		console.log("you have been clicking the programming script container for sure, little one.");
-		//if yes, we want to create a new li for add future dropped items
-		$("#dropBlocksHere").removeAttr("id"); 
-		var listItemForDropping = document.createElement('LI');
-		listItemForDropping.setAttribute("id","dropBlocksHere");
-		$("#programming-final-list").append($(listItemForDropping));
-	}else{
-		if($(e.target).attr('id').indexOf('dropBlocksHere')>-1){
-			console.log("hun, you're clicking the same container. try another one...");
-		}else{
-			$(e.target).css("border","3px rgb(50,50,100) solid");
+	if($(e.target).attr('id')!==undefined || $(e.target).attr('id')==true){
+		if($(e.target).attr('id').indexOf("programming-script-container")>-1){
+			console.log("you have been clicking the programming script container for sure, little one.");
+			//if yes, we want to create a new li for add future dropped items
+			$("#dropBlocksHere").css('border','none');
 			$("#dropBlocksHere").removeAttr("id");
-			$(e.target).attr('id','dropBlocksHere');
+			var divForDropping = document.createElement('DIV');
+			divForDropping.setAttribute("id","dropBlocksHere");
+			divForDropping.setAttribute("class","programming-final-list-li");
+			$(divForDropping).css('border','2px gainsboro solid');
+			$("#programming-final-list").append($(divForDropping));
+			$(divForDropping).sortable({cursorAt:{left:10, top:30}});
+		}else{
+			if($(e.target).attr('id').indexOf('dropBlocksHere')>-1){
+				console.log("hun, you're clicking the same container. try another one...");
+						$(e.target).css('border','2px gainsboro solid');
+			}else{
+
+			}
+		}
+	}else{
+		console.log($(e.target).attr('class'));
+		if($(e.target).attr('class').indexOf('objectInput')<0 || $(e.target).attr('class').indexOf('objectScriptTitle')<0){	
+			if($(e.target).attr('class').indexOf("programming-final-list-li")>-1){
+				console.log('another div for you to play with, this current one is boring<3');
+				$(e.target).css("border","2px gainsboro solid");
+				$("#dropBlocksHere").css('border','none');
+				$("#dropBlocksHere").removeAttr("id");
+				$(e.target).attr('id','dropBlocksHere');	
+			}
 		}
 	}
+	
 });
 
 $("#programming-script-container").droppable({drop:function(e,ui){
 	//--------TESTING NEW SYSTEM OF ADDING LINES
-	
+	$("#dropBlocksHere").css('border','2px gainsboro solid');
 	console.log("HERE'S WHAT I DROPPED ON PROGRAMMING SCRIPT CONTAINER:");
 	console.log(ui.helper);
 	//--------OLD: 
@@ -283,32 +347,76 @@ $("#programming-script-container").droppable({drop:function(e,ui){
 }})//end droppable programming script container
 
 $("#programming-title-bar").on('click', function(){
-	var keywords = "Robin Williams";
-	var div = document.createElement('DIV');
-	div.setAttribute('id','resultsContainer');
-	
-	$(div).prependTo($("#object-curation-container"));
-	returnResults(keywords);
-})
-	$(".ul-div-wrapper").sortable({sort:function(e,ui){
-		console.log('sorting');
-	}});
+	console.log("CLICKKKEDDD");
+	if($("#resultsContainer").css('display')=='block'){
+		console.log('results container is block visibility');
+		$("#resultsContainer").hide();
+	}else{
+		var div = document.createElement('DIV');
+		div.setAttribute('id','resultsContainer');
+			$(div).prependTo($("#object-curation-container"));
+		// $(div).show();
+		$("#resultsContainer").empty();
+		$("#resultsContainer").show();
+		$("#resultsContainer").css('display','block');
+		var keywords = "Robin Williams";
+		var keyArr=[];
+		$.each($(".object-script-li"),function(index,listItem){
+			console.log("LIST ITEM: ");
+			console.log(listItem);
+			if($(listItem).attr('class').indexOf("objectScriptTitle")==-1){
+				var listitemHTML = $(listItem).html();
+				console.log("LIST ITEM BEING TESTED:"+listitemHTML);
+				var intersects = intersectionWithParams($(listItem).html());
+				var intersects1 = false;
+				if($(listItem).html().indexOf("trendingName")>-1){
+					var intersects1 = intersectionWithParams($(listItem).find(".trendingName").html());	
+				}
+				if(intersects || intersects1){
+					if(intersects){
+						keyArr.push($(listItem).html());	
+					}else{
+						keyArr.push($(listItem).find('.trendingName').html());
+					}
+					
+				}	
+			}
+		})
+		console.log("key array");
+		console.log(keyArr);
+		returnResults(keyArr);	
+	}
 
-// function createGenericBlockForScript(block){
-// 	var text = $(block).html();
-// 	var newBlockList = document.createElement("UL");
-// 	newBlockList.setAttribute('class',"nonobject-script-ul");
-// 	$(newBlockList).css('height',$("#programming-final-list").css('height'));
-// 	var blockList = document.createElement("LI");
-// 	blockList.setAttribute("class","nonobject-script-li");
-// 	$(blockList).css('height',$("#programming-final-list").css('height'));
-// 	$(blockList).html(text);
-// 	$(blockList).css('background-color',$(block).css('background-color'));
-// 	$(newBlockList).css('background-color',$(block).css('background-color'));
-// 	newBlockList.appendChild(blockList);
-// 	return newBlockList;
-// }
-// 
+});
+function intersectionWithParams(matchName){
+	console.log(matchName);
+	var list = parameters;
+	var returnMe = false;
+	list.forEach(function(item,index){
+		var tryMe =item.name+"";
+		var trimmed = tryMe.replace(/ /g, '');
+		var trimMatch =matchName.replace(/ /g, '');
+		if(trimmed.toUpperCase()==trimMatch.toUpperCase()){
+			returnMe= true;
+		}else{
+			if(item.children!=="none"){
+				item.children.forEach(function(val,i){
+					var valMe = val.name+"";
+					var vtrimmed = valMe.replace(/ /g, '');
+					var vtrimMatch =matchName.replace(/ /g, '');
+					// console.log("vtrimmed, vtrimMatch");
+					// console.log(vtrimmed.toUpperCase() +" ||| "+  vtrimMatch.toUpperCase());
+					if(vtrimmed.toUpperCase() == vtrimMatch.toUpperCase()){
+						returnMe = true;
+					}
+				})
+			}
+		}
+	})
+	return returnMe;
+}
+$(".programming-final-list-li").sortable();
+
 function addNonObjectToProgramming(e,ui,addToMe){
 	//TESTING
 	var divvy = document.createElement('DIV');
@@ -318,23 +426,27 @@ function addNonObjectToProgramming(e,ui,addToMe){
 	ul.setAttribute("class","nonobject-script-ul");
 	var li = document.createElement('LI');
 	li.setAttribute('class','nonobject-script-li');
-	if($(ui.helper).html()=="HAS A COUNT OF"){
+	if($(ui.helper).html().indexOf("TOP TV RELEASED AFTER YEAR")>-1 || $(ui.helper).html().indexOf("LENGTH IN MINUTES:")>-1){
 		console.log("THIS IS COUNT!");
 		var input = document.createElement("input");
 		$(input).attr('name','countInput');
 		$(input).attr('class','countInput');
 		$(input).attr('type','text');
 		$(input).attr('value','type here');
-
 	}
-	$(li).html($(ui.helper).html());
+	$(li).html(" "+$(ui.helper).html()+" ");
 	$(li).append($(input));
 	$(li).css('background-color',$(ui.helper).css('background-color'));
 	var programmingFinalListHeightItem = maxHeight("#dropBlocksHere");// $(addToMe).children().css('height');
 	var programmingFinalListHeight = parseInt(programmingFinalListHeightItem.css('height').replace('px',''));
 	// var programmingFinalListHeight = parseInt(programmingFinalListHeightItem.css('height').replace('px',''))+(2*$(".object-script-li").length);
 	console.log("new height:"+programmingFinalListHeight);
+	$(li).css('font-size',programmingFinalListHeight-25);
+	if($(ui.helper).html().indexOf("TOP TV RELEASED AFTER YEAR")>-1 || $(ui.helper).html().indexOf("LENGTH IN MINUTES:")>-1){
+			$(li).css('font-size',20);
+	}
 	$(ul).css("height",programmingFinalListHeight);
+	$(divvy).css('height',programmingFinalListHeight);
 	$(li).css('height',programmingFinalListHeight);
 	$(ul).append($(li));
 	// $(addToMe).append($(ul)); //TESTING- commented out
@@ -353,6 +465,7 @@ function addObjectToProgramming(e,ui, addToMe){
 	$(ui.helper).fadeOut(500,function(){
 		$(ui.helper).remove();
 	})
+	var maxheight = maxHeight("#dropBlocksHere");
 	var newlistHeight = parseInt($(newlist).css('height').replace('px',''));
 	// var li = document.createElement('LI');
 	// li.setAttribute('class','programming-final-list-LI');
@@ -365,7 +478,7 @@ function addObjectToProgramming(e,ui, addToMe){
 	//END TESTING
 	// $(addToMe).append(newlist); //TESTINg-commented out 
 	var pflHeight = newlistHeight+(newlistHeight/10);
-	$(addToMe).css('height',pflHeight);
+	$(addToMe).css('height',maxHeight);//pflHeight);
 	// $("#programming-final-list").droppable();
 	// $("#programming-final-list").sortable();
 	//2. create a new grab title bar and slide in object-curation-container
@@ -390,7 +503,6 @@ function createObjectForScript(){
 	$(newList).attr('class','object-script-ul');
 	var newListHeight = (parseInt(tempList.children('li').length+1) * 20)+(2*tempList.children('li').length);
 	$(newList).css('height',newListHeight);
-	// $(newList).css('width',"30%");
 	$(newList).append("<li class='object-script-li objectScriptTitle'><input class='objectInput' value='NAME THIS OBJECT'></input></li>")
 
 	for(var i =0; i<tempList.children().length; i++){
@@ -406,21 +518,46 @@ function createObjectForScript(){
 		$(listItem).html(objname);
 		$(newList).append($(listItem));
 	}
-	$(".objectScriptTitle").css('width','30%');
+	// $(".objectScriptTitle").css('width','30%');
 	return newList;
 }
 
+function getVideos(keyword,callback){
+	var keyword = keyword.toLowerCase();
+	var key ="AIzaSyC1uRCbBAgaEDmRUL5_B6xW1X-GkIDv8tc";
+	var year = $(".countInput").val();
+$.ajax({
+	url:"https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCaption=closedCaption&maxResults=10&q="+keyword+"&key="+key,
+	type:"GET",
+	dataType:'json',
+	success:function(data){
+		console.log("request succeeded");
+		var results = data.items;
+		callback(results);
+	}
+	});
+}
 
+function playVideos(list){
+	for(var i = 0; i<list.length; i++){
+		var currentVideo = list[i];
+		if(i==0){
+			console.log("loadVideo: "+currentVideo);
+			loadVideo(currentVideo);
+		}else{
+			mediaPlayer.addEventListener('ended', function(){
+				//load new video. 
+				loadVideo(currentVideo);
+			})
+		}
+	}
+}
 function returnResults(keywords){
-		var key ="AIzaSyC1uRCbBAgaEDmRUL5_B6xW1X-GkIDv8tc";
-	$.ajax({
-		url:"https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCaption=closedCaption&maxResults=20&q="+keywords+"&key="+key,
-		type:"GET",
-		dataType:'json',
-		success:function(data){
-			console.log("request succeeded");
-			var results = data.items;
-			for(var i = 0; i<20; i++){
+	
+	keywords.forEach(function(word,index){
+		getVideos(word, function(results){
+			videoURLS = [];
+			for(var i = 0; i<results.length; i++){
 				var thisVideo = results[i];
 				var videoId = thisVideo.id.videoId;
 				var image = thisVideo.snippet.thumbnails.default.url;
@@ -446,16 +583,28 @@ function returnResults(keywords){
 				videoElement.appendChild(textDiv);
 
 				$("#resultsContainer").append($(videoElement));
+				videoURLS.push(url);
 			}
-		}
-	});//end ajax call
+			var playAll = document.createElement('button');
+			playAll.setAttribute('class','play-all');
+			$(playAll).html("Play All Videos");
+			$(playAll).on('click', function(){
+				playVideos(videoURLS);
+			})
+			$("#resultsContainer").append($(playAll));
+		})
+	})
+	if($(".countInput").length>0){
+		getVideosAfter($(".countInput").val());
+	}
 }
 function replaceGrabBar(){
 	// <div id='grab-title-bar' class='grabbing-container'>OBJECTS:</div>
 	var obj = document.createElement('DIV');
 	$(obj).attr('id', 'grab-title-bar');
 	$(obj).attr('class','grabbing-container');
-	$(obj).html("OBJECTS:");
+	$(obj).html("<i class='fa fa-arrows''></i> CONTENT <span class='ampersand'>&</span> PARAMETERS:");
+	$('.fa').hide();
 	$(obj).prependTo(	$("#object-curation-container"));
 	$(obj).draggable();
 }
@@ -475,4 +624,49 @@ var maxHeight = function(elementSelector){
 	return highest;
 }
 
-})//end documen.tready
+function getVideosAfter(year){
+	$.ajax({
+		url:db+"getTV/"+year,
+		type: 'GET',
+		success: function(message){
+			var videoURLS = [];
+			for(var i=0;i<message.length;i++){
+				var item = message[i];
+				var image = item.image_url;
+				var title = item.title;
+				var url = item.video_url;
+				
+				var videoElement = document.createElement('div');
+				videoElement.setAttribute('class','videoDiv');
+				var thumbnail = document.createElement('img');
+				thumbnail.setAttribute('src',image);
+				thumbnail.setAttribute('class','videoThumbnail');
+				var textDiv = document.createElement('div');
+				textDiv.setAttribute('class','videoTitleDiv');
+				var text = document.createElement('p');
+				$(text).html(title);
+				var link =document.createElement('a');
+				link.setAttribute('class','videoLink');
+				link.setAttribute('src',url);
+
+				textDiv.appendChild(text);
+				link.appendChild(thumbnail);
+				videoElement.appendChild(link);
+				videoElement.appendChild(textDiv);
+				videoURLS.push(url);
+
+				$("#resultsContainer").append($(videoElement));
+			}
+			// var playAll = document.createElement('button');
+			// playAll.setAttribute('class','play-all');
+			// $(playAll).html("Play All Videos");
+			// $(playAll).on('click', function(){
+			// 	playVideos(videoURLS);
+			// })
+			// $("#resultsContainer").append($(playAll));
+		}
+	})
+}
+
+
+})//end documen.tready 

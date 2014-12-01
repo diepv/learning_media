@@ -1,0 +1,23 @@
+#editor{
+	position:relative;
+	display:inline-block;
+	width:100%;
+	height:84%;
+	z-index:10;
+}
+
+input.user-input{
+	position:relative;
+	display:inline;
+	width:50px;
+	border-left:2px solid white;
+	border-right:2px solid white;
+	border-bottom:2px solid white;
+	border-top:0px;
+	margin-left:10px;
+	margin-right:10px;
+	background-color:transparent;
+}
+p.code-block-label{
+	display:inline;
+}

@@ -5,12 +5,12 @@
 body{
 	font-family:Avenir;
 	color:white;
-	font-size:2em;
+	font-size:24px;
 }
 ul#mainNav{
 	display:flex;
 	width:100%;
-	height:12%;
+	height:8%;
 	margin:0;
 	padding:0;
 }
@@ -25,22 +25,36 @@ ul#mainNav li{
 	text-align:center;
 	word-wrap:break-word;
 }
-#ampersand{
-	font-size:.7em;
+/*SPAN WORK*/
+.ampersand{
+	font-size:16px;
 }
+.fa{
+	display:none;
+}
+.trending{
+	font-size:13px;
+	text-decoration:none;
+	word-wrap:break-word;
+}
+.trendingName{
+	text-decoration:underline;
+}
+
+
 .mutationList{
 	display:none;
 	position:relative;
 	width:100%;
-	height:10%;
-	font-size:.5em;
+	height:50px;
+	font-size:18px;
 	text-align:center;
 	vertical-align:middle;
 }
 .blocklist{
 	display:flex;
 	width:100%;
-	height:100%;
+	height:50px;
 	position:relative;
 	margin:0;
 	padding:0;
@@ -59,32 +73,40 @@ li{
 }
 
 /*Color scheme for all programming tabs: 
-object: rgb(128,153,102)
-events: rgb(202,175,175)
-conditional: rgb(139,177,177)
-parameters: rgb(102,128,153)
-operators: rgb(128,102,153)
+object: rgb(46,204,113)
+events: rgb(231,76,60)
+conditional: rgb(52,152,219)
+parameters: rgb(52,73,94)
+operators: rgb(230,126,34)
+properties: rgb(155,89,182)
+hideoptions: rgb(241,196,15)
 */
 #hide{
-	background-color:rgb(202, 202, 175);
+	background-color:rgb(241,196,15);
 }
 /*STYLING SPECIFIC TO THE OBJECT FILTERS AND TAB*/
 li#fetchObjects, li.objectBlock{
-	background-color:rgb(128, 153, 102);
+	background-color:rgb(46,204,113);
 }
 /*STYLING SPECIFIC TO THE PARAMETER FILTERS AND TAB*/
 li#fetchParameters, li.parameterBlock{
-	background-color:rgb(102, 128, 153);
+	background-color:rgb(52,152,219);
 }
 /*STYLING SPECIFIC TO THE EVENTS FILTERS AND TAB*/
 li#fetchEvents, li.eventBlock{
-	background-color:rgb(202, 153, 102);
+	background-color:rgb(52,73,94);
 }
 /*STYLING SPECIFIC TO THE CONDITOINALS FILTERS AND TAB*/
 li#fetchConditionals, li.conditionalBlock{
-	background-color:rgb(139, 177, 177);
+	background-color:rgb(231,76,60);
 }
 /*STYLING SPECIFIC TO THE OPERATORS FILTERS AND TAB*/
 li#fetchOperators, li.operatorBlock{
-	background-color:rgb(128, 102, 153);
+	background-color:rgb(230,126,34);
+}
+li#fetchProperties, li.propertiesBlock{
+	background-color:rgb(155, 89, 182);
+}
+li#trash{
+	background-color:rgb(241,196,15);
 }

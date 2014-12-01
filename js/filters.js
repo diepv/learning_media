@@ -67,11 +67,7 @@ var parameters = [{
 			"children":"none"
 		},
 		{
-			"name":"Features Robin Williams",
-			"children":"none"
-		},
-		{
-			"name":"Features Selena Gomez",
+			"name":"Current Time",
 			"children":"none"
 		},
 		{
@@ -94,9 +90,17 @@ var parameters = [{
 		{
 			"name":"Background Noise Makers",
 			"children":"none"
+		},		
+		{
+			"name":"Robin Williams",
+			"children":"none"
 		},
 		{
-			"name":"Has a Count Of",
+			"name":"Selena Gomez",
+			"children":"none"
+		},
+		{
+			"name":"BLAKE LIVELY",
 			"children":"none"
 		}];
 		
@@ -122,6 +126,14 @@ var events = [
 "PAUSE",
 "PLAY"
 ];
+
+var propertiesOfObjects = [
+"is playing",
+"paused",
+"played",
+"length in minutes: ",
+"TOP TV RELEASED AFTER YEAR: "
+]
 
 // //CONDITIONALS, LOOPS
 
