@@ -51,7 +51,7 @@ div#calendar{
 	position:absolute;
 	display:inline;
 	margin:10px;
-	z-index:10;
+	z-index:100;
 	background-color:navy;
 /*	border: 2px white;*/
 /*	border-radius:15px;*/

@@ -4,20 +4,102 @@
 	width:100%;
 	height:84%;
 	z-index:10;
+	border:none;
 }
-
+ul#script-list{
+	position:relative;
+	display:inline-block;
+	border:none;
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	z-index:11;
+}
+input.user-input:focus{
+	border:none;
+	outline:none;
+	box-shadow:none;
+}
 input.user-input{
 	position:relative;
 	display:inline;
-	width:50px;
-	border-left:2px solid white;
-	border-right:2px solid white;
-	border-bottom:2px solid white;
-	border-top:0px;
+	height:30px;
+	font-size:16px;
+	border:none;
 	margin-left:10px;
 	margin-right:10px;
-	background-color:transparent;
+	background-color:rgba(220,220,240,0.7);
+	vertical-align:middle;
 }
 p.code-block-label{
 	display:inline;
+	font-size:16px;
+	vertical-align:middle;
 }
+li.dropped{
+	display:inline; /*changed to block from inline --- when 'block', cannot drop into input area. when 'inline', code blocks sit next to each other instead of after each other. */
+	vertical-align:baseline;
+}
+form.script-form{
+	display:inline-block;
+	height:auto;
+	padding:10px;
+	width:100%;/*width at 100% allows the code block to fill the entire space (otherwise, the li.dropped inline display will cause code blocks to sit aside each other rather than after)*/
+}
+#script-list{
+	list-style-type:none;
+}
+.editor-options-list:focus{
+	border:none;
+	outline:none;
+	box-shadow:none;
+}
+.editor-options-list::-webkit-scrollbar{
+	display:none;
+}
+.editor-options-list-div{
+	background-color:transparent;
+}
+.editor-options-list{
+	position:relative;
+	display:inline;
+	font-size:14px;
+	font-style:Avenir;
+	overflow-y:scroll;
+	overflow-x:hidden;
+	color:white;
+	padding:10px;
+	margin:5px;
+	left:20px;
+	z-index:40;
+	border:none;
+	background-color:transparent;
+}
+.editor-options-list option{
+	font-size:14px;
+	font-style:Avenir;
+	color:white;
+	border-bottom:3px solid white;
+	padding:8px;
+}
+
+.parameter-block{
+	display:inline-block;
+}
+.parameter-block form{
+	display:inline-block;
+	padding-top:5px;
+	padding-bottom:0px;
+	padding-left:10px;
+	padding-right:10px;
+	margin-right:8px;
+	margin-left:8px;
+	vertical-align:baseline;
+}
+.ui-tooltip{
+	z-index:1100;
+}
+
+
+

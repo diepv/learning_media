@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	$("#calendar").hide();
+	//SETUP CODE
+	hideCalendar();
 	function setUpFilters(){
 		filters.forEach(function(filterItem,filterIndex){
 			//for each filter item, create a category block
@@ -33,42 +34,49 @@ $(document).ready(function(){
 				function compDepo(arrItem){
 					if(arrItem){
 						if(typeof arrItem !== "string"){
-								arrItem.forEach(function(item,ind){
-								if(typeof item == "string"){
-									if(item == "userInput"){
-										var elem = document.createElement('input');
-										elem.setAttribute('class','user-input');
-										var constrings = arrItem[ind+1];
-										arrItem.splice(ind+1,1);
-										elem.dataset.constraints = constrings;
-										htmlObject.push(elem.outerHTML);
-									}else{
-										var elem = document.createElement("p");
-										elem.innerHTML = item;
-										elem.setAttribute('class','code-block-label');
-										if(item=="{}"){
-											$(elem).addClass("brackets-label");
-										}
-										htmlObject.push(elem.outerHTML);
-									}
-								}else{
+							if(arrItem.hasOwnProperty("userInput")){
+								var elem = document.createElement('input');
+								elem.setAttribute('class','user-input');
+								var constrings = arrItem.userInput[0].constraints;
+								elem.dataset.constraints = constrings;
+								var helptext = arrItem.userInput[1].helpText;
+								elem.dataset.helptext = helptext;
+								htmlObject.push(elem.outerHTML);
+							}else{
 
-									return compDepo(item);
-								}
+								arrItem.forEach(function(item,ind){
+									if(typeof item == "string"  || typeof item == String){
+										var elem = document.createElement("p");
+										elem.setAttribute('class','code-block-label');
+										if(item.replace(/\s+/g,"")=="{}"){
+											$(elem).addClass("brackets-label");
+											item = "{&nbsp &nbsp &nbsp &nbsp}";
+									}
+									elem.innerHTML = item;
+									htmlObject.push(elem.outerHTML);
+									}else{
+
+										return compDepo(item);
+									}
 							}); //end arrItem foreach
-						}else{
+						}
+						}
+						else{
+
 							var elem = document.createElement("p");
 							elem.innerHTML = arrItem;
 							elem.setAttribute('class','code-block-label');
-							if(item=="{}"){
+							if(item.replace(/\s+/g,"")=="{}"){
 								$(elem).addClass("brackets-label");
 							}
 							htmlObject.push(elem.outerHTML);
 						}
-				}else{
-					return final();
+					}else{
+						// console.log('!!!arrItem');
+						return true;
+					}
 				}
-				}
+				
 			
 				compDepo(catItem.components)
 				codeBlock.dataset.htmlString = htmlObject.toString();
@@ -80,40 +88,56 @@ $(document).ready(function(){
 		})	
 		
 	}
+	
 	setUpFilters();
-	$("li.code-list-item").draggable({helper:'clone',zIndex:100,appendTo:"#editor"}); 
-	$("li.code-list-item").on('drag', function(){
-		console.log("DRAG");
+	
+	function hideCalendar(){
+			$("#calendar").hide();
+			$("#calendar").css('z-Index','0');
+	}
+	function showCalendar(){
+			$("#calendar").css('z-Index','100');
+			 $("#calendar").css("display",'inline');
+	}
+	//DROPPABLE, DRAGGABLE:
+	$("li.code-list-item").draggable({helper:'clone',zIndex:100,snap:true,}); 
+	$("li.code-list-item").on('drag', function(e,ui){
+		// ui.helper.css('position','absolute');
+		console.log("DRAGGING");
 	})
 	$("#editor").droppable({drop:function(event,ui){
-		console.log(ui.draggable);
-	    $(this).append(ui.draggable);
-			//change appended item to have the right HTML 
-			var htmls = ui.draggable.data("html-string");
-			ui.draggable.html(htmls);
-      ui.draggable.css('min-width', '150px');
-      ui.draggable.css('width', '150px');
-      ui.draggable.css('color', 'white');
-      ui.draggable.css('position', 'absolute');
-			ui.draggable.addClass('dropped');
-      ui.draggable.draggable('destroy').draggable(); /* need to reset the draggability */
-		console.log('dropped in editor');
-	}});
-	
-	// $("body").on("drop",function(e,ui){
-	// 	//on drop, change block to show 'components' instead of 'title'
-	// 	console.log('data of item dropped:');
-	// 	// console.log(e.data("components"));
-	// 	console.log(e);
-	// 	console.log(ui);
-	// 	console.log($(ui.helper));
-	// 	console.log($(ui.helper).data());
-	// })
 
+		//create a duplicate
+		if(ui.draggable.attr('class').indexOf('dropped')>-1){
+			
+		}else{
+	    $("#script-list").append(ui.helper);
+			//change appended item to have the right HTML 
+			var htmls = ui.helper.data("htmlString");
+			htmls = htmls.replace(/(>,<)+/g,"><");
+			
+			var newLi = document.createElement('li');
+			newLi.setAttribute('class','dropped');
+			var form = document.createElement('form');
+			form.setAttribute('class','script-form');
+			form.innerHTML = htmls;
+			var newColor =$(ui.helper).css('background-color').replace("rgb","rgba").replace(")",",0.5)");
+			
+      $(form).css('background-color', newColor);
+			newLi.appendChild(form);
+      $(newLi).css('position', 'relative');
+      $(newLi).css('color', 'white');
+      $("#script-list").append($(newLi));
+			$(ui.helper).remove();
+		console.log('dropped in editor');
+		}
+	}});
+
+	//EVENT LISTENERS FOR TOP BAR
 	$( "#run-drop-down-menu" ).on('change', function(){
 		var selectedId = $(this).find("option:selected").attr('id');
 		if(selectedId == "run-at-date-input"){
-			$("#calendar").css("display",'inline');
+			showCalendar();
 			$("#calendar").datepicker();
 		}
 	});
@@ -121,7 +145,7 @@ $(document).ready(function(){
 		console.log('body clicked');
 		if($("#calendar").css('display')!=='none'){
 			console.log('calendar dispaly is not none');
-			$("#calendar").hide();
+			hideCalendar();
 		}
 	})
 	$("#calendar").on('change', function(){
@@ -130,9 +154,11 @@ $(document).ready(function(){
 		if(currentDate!==null){
 			var shortDate = currentDate.toString().substring(0,15);
 			$("#run-at-date-input").html("BEGINNING ON: "+shortDate);
-			$("#calendar").hide();
+			hideCalendar();
 		}
 	})
+	
+	//EVENT LISTENERS FOR SIDE BAR OPTION MENU
 	$(".category-list-item").on('click', function(event){
 		console.log('clicked box');
 		var e = event;
