@@ -1,0 +1,22 @@
+$(document).ready(function(){
+    populateTimeList();
+//1. populate $('#time-list') with all the available hours
+    function populateTimeList(){
+        console.log('called populateTimeList');
+        var today = new Date();
+        var currentHour = today.getHours();
+        for(var i = 0; i<24; i++){
+            //for each hour, create an input to appned to time list
+            var newInput = document.createElement('li');
+            var inputLabel = document.createElement('label');
+
+            newInput.setAttribute("class","time-list-input");
+            newInput.setAttribute("id","hour-"+i);
+            inputLabel.setAttribute("class",'time-list-input-label');
+            inputLabel.innerHTML = parseInt(i+1)+":00";
+            inputLabel.appendChild(newInput);
+            $("#time-list").append($(inputLabel));
+        }
+    }
+
+});

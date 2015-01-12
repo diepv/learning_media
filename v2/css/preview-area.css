@@ -1,0 +1,27 @@
+#preview-area{
+    width:18%;
+    position:relative;
+    display:inline;
+}
+#time-list{
+    width:19%;
+    background-color:pink;
+    height:100%;
+    position:relative;
+    display:inline-block;
+    /*float:right;*/
+}
+.time-list-input{
+    width:100%;
+    min-height:30px;
+    background-color:gray;
+    position:relative;
+    display:inline-block;
+}
+.time-list-input-label{
+    background-color:gray;
+    /*width:100%;*/
+    position:relative;
+    display:block;
+    border:2px solid black;
+}

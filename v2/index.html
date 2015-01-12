@@ -3,28 +3,37 @@
 	<script type='text/javascript' src='../js/jquery-2.1.1.min.js'></script>
 	<script type='text/javascript' src='../js/jquery-ui/jquery-ui.min.js'></script>
 	<script type='text/javascript' src='../js/jquery-scrollTo/jquery.scrollTo.min.js'></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">-->
+  <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+  <!--<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
 	<!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
+ <!--javascript files -->
   <script src="js/filtersList.js"></script>
   <script src="js/main.js"></script>
   <script src="js/editor.js"></script>
-	<link rel='stylesheet'type='text/css' href='css/main.css'></link>
-	<link rel='stylesheet'type='text/css' href='css/sidebar.css'></link>
-	<link rel='stylesheet'type='text/css' href='css/programmingarea.css'></link>
+	<script src="js/preview-area"></script>
+	<script src="js/object_manager.js"></script>
+	<script src="js/sessionFunctions.js"></script>
+
+	<!--stylesheets-->
+	<link rel='stylesheet'type='text/css' href='css/main.css'/>
+	<link rel='stylesheet'type='text/css' href='css/sidebar.css'/>
+	<link rel='stylesheet'type='text/css' href='css/programmingarea.css'/>
+	<link rel='stylesheet'type='text/css' href='css/preview-area.css'/>
+	<link rel='stylesheet'type='text/css' href='css/objectCreator.css'/>
+
 </head>
 <body>
 	<div id='containing-div'>
-	<div id='side-bar-options'>
-		<ul id='options-list'>
-		</ul>
-	</div>
-	
+	<!--<div id='side-bar-options'>-->
+		<!--<ul id='options-list'>-->
+		<!--</ul>-->
+	<!--</div>-->
+	<!---->
 	<div id='main-programming-area' class='programming-area'>
 		<div id='top-bar'>
 			<form id='title-bar' class='top-bar-form'>
-				<input type='text' id='title-input' value='Untitled'></input>
+				<input type='text' id='title-input' value='Untitled (click to edit)'></input>
 			</form>
 			<form id='controls-bar' class='top-bar-form'>
 				<input type='button' id='save-script-button' value="SAVE"></input>
@@ -43,9 +52,18 @@
 			
 		</div>
 		<div id='editor'>
-			<ul id="script-list">
+			<div id="variables-list-div">
+				<ul id="variables-list">
+				</ul>
+			</div>
+			<ul id="script-list" class="click-space">
 			</ul>
 		</div>
+	</div>
+	<div id='preview-area'>
+	<form id='time-list'>
+		<label>Drop Script Into Time Block</label>
+	</form>
 	</div>
 </div>
 	

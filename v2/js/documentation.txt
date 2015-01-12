@@ -1,0 +1,9 @@
+.object-dropdown: class for dropdown select
+.media-object-object: class of option items for media object dropdown
+.object-property-form: class for added fields (in form elements)
+
+
+data items for inputs:
+ inputField.dataset.constraints = constraints;
+ inputField.dataset.helptext = helpText;
+ inputField.dataset.titletext = titleText; (title of the option)

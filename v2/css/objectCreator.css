@@ -1,0 +1,42 @@
+.object-property-form{
+    /*background-color:rgba(190,180,255,0.3);*/
+    position: relative;
+    display:block;
+    width:320px;
+    height:auto;
+    padding-top:4px;
+    padding-bottom:4px;
+    padding-left:0px;
+    padding-right:0px;
+    margin:0px;
+    /*text-align: center;*/
+}
+.property-label{
+}
+.property-input{
+    background-color:rgba(255,255,255,0.5);
+}
+#object-dropdown-div{
+    background-color:transparent;
+}
+select#object-dropdown{
+    position:relative;
+    display:inline;
+    font-size:14px;
+    font-style:Avenir;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    padding:10px;
+    margin:5px;
+    left:20px;
+    z-index:40;
+    border:none;
+    background-color:transparent;
+}
+.media-object-property-option{
+    font-size:14px;
+    font-style:Avenir;
+    color:white;
+    border-bottom:3px solid white;
+    padding:8px;
+}

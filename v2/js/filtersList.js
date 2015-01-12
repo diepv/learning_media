@@ -112,7 +112,7 @@ var filtersOld =
 			}
 		]},
 	{"title":"actions_on_video_player",
-		"color": "orange",
+		"color": "maroon",
 	"components":[
 		{
 			"title":"play",
@@ -248,11 +248,11 @@ var filters =
 		},
 		{
 			"title":"on end of playlist",
-			"components":["when playlist is finished","{ }"]
+			"components":["when ",{"userInput":[{"constraints":["create_object"]},{"helpText":"insert media object"}]}," is finished","{ }"]
 		},
 		{
 			"title":"on start of playlist",
-			"components":["when playlist is started","{ }"]
+			"components":["when ",{"userInput":[{"constraints":["create_object"]},{"helpText":"insert media object"}]}," is started","{ }"]
 		},
 		{
 			"title":"on start of video",
@@ -269,6 +269,11 @@ var filters =
 		{
 			"title":"on date",
 			"components":["when date is: ",{"userInput":[{"constraints":["date_objects"]},{"helpText":"insert a date"}]},"{ }"]
+		},
+		{
+			"title":"on breaking news",
+			"components":["when breaking news hits ","{ }"]
+
 		}
 	]},
 	{"title":"access_operators_and_variables",
@@ -303,15 +308,15 @@ var filters =
 			"components":[{"userInput":[{"constraints":["var","string","number"]},{"helpText":"insert something to compare"}]},"<=",{"userInput":[{"constraints":["var","string","number"]},{"helpText":"insert something to compare"}]}]
 		}
 	]},
-	{
-		"title":"create_and_access_variables",
-		"color":"navy",
-		"components":[
-			{
-				"title":"new variable",
-				"components":["new variable: ",{"userInput":[{"constraints":["string"]},{"helpText":"insert variable name"}]},"=",{"userInput":[{"constraints":["var","string","number","access_operators_and_variables","create_object"]},{"helpText":"insert variable's value"}]}]
-			}
-		]},
+	//{
+	//	"title":"create_and_access_variables",
+	//	"color":"navy",
+	//	"components":[
+	//		{
+	//			"title":"new variable",
+	//			"components":["new variable: ",{"userInput":[{"constraints":["string"]},{"helpText":"insert variable name"}]},"=",{"userInput":[{"constraints":["var","string","number","access_operators_and_variables","create_object"]},{"helpText":"insert variable's value"}]}]
+	//		}
+	//	]},
 	{"title":"actions_on_video_player",
 		"color": "orange",
 	"components":[
@@ -330,7 +335,7 @@ var filters =
 	]},
 	{
 		"title":"functions_for_custom_button",
-		"color":"aquamarine",
+		"color":"steelblue",
 		"components":[
 			{
 				"title":"show twitter feed",
@@ -338,54 +343,6 @@ var filters =
 			}
 		]
 	},
-	{"title":"access_object_properties",
-		"color": "lightblue",
-	"components":[
-		{
-			"title":"get length of variable",
-			"components":["get length of ",{"userInput":[{"constraints":["var"]},{"helpText":"insert variable to get length (can be count or minutes depending on variable data)"}]}]
-		},
-		{
-			"title":"set keyword property",
-			"components":["set variable ",{"userInput":[{"constraints":["var"]},{"helpText":"insert variable"}]}," keyword property ",{"userInput":[{"constraints":["string"]},{"helpText":"insert keyword (string)"}]}]
-		},
-		{
-			"title":"set minute length property",
-			"components":["set variable ",{"userInput":[{"constraints":["var"]},{"helpText":"insert variable"}]}," max minute length ",{"userInput":[{"constraints":["number"]},{"helpText":"insert minutes (number)"}]}]
-		},
-		{
-			"title":"set category property",
-			"components":["set variable ",{"userInput":[{"constraints":["var"]},{"helpText":"insert variable"}]}," category property ",{"userInput":[{"constraints":["string"]},{"helpText":"insert category (string)"}]}]
-		},
-		{
-			"title":"set max count property",
-			"components":["set variable ",{"userInput":[{"constraints":["var"]},{"helpText":"insert variable"}]}," max count ",{"userInput":[{"constraints":["number"]},{"helpText":"insert count (number)"}]}]
-		}
-	]},
-	{"title":"initialize_object_with_properties",
-	"color":"lightpink",
-	"components":[
-		{
-			"title": "property: keyword",
-			"components":["keyword ( ",{"userInput":[{"constraints":["array",["string"]]},{"helpText":"insert keyword(s) (string)"}]}," )"]
-		},
-		{
-			"title": "property: category",
-			"components":["category ( ",{"userInput":[{"constraints":["string"]},{"helpText":"insert category (string)"}]}," )"]
-		},
-		{
-			"title": "property: max count",
-			"components":["max count ( ",{"userInput":[{"constraints":["number"]},{"helpText":"insert count (number)"}]}," )"]
-		},
-		{
-			"title": "property: release date",
-			"components":["release date ( ",{"userInput":[{"constraints":["date"]},{"helpText":"insert date (date object)"}]}," )"]
-		},
-		{
-			"title": "property: title",
-			"components":["title ( ",{"userInput":[{"constraints":["string"]},{"helpText":"insert title (string)"}]}," )"]
-		}
-	]},
 	{"title":"create_object",
 		"color": "blue",
 	"components":[
@@ -417,3 +374,71 @@ var filters =
 		]	
 	}
 ];
+
+var variablePropertyAccess =
+	{"title":"access_object_properties",
+		"color": "lightblue",
+		"components":[
+			{
+				"title":"add property to object",
+				"components":[]
+			},
+			{
+				"title":"get length of variable",
+				"components":["get length of ",{"userInput":[{"constraints":["var"],"helpText":"insert variable to get length (can be count or minutes depending on variable data)"}]}]
+			},
+			{
+				"title":"set keyword property",
+				"components":["set variable ",{"userInput":[{"constraints":["var"],"helpText":"insert variable"}]}," keyword property ",{"userInput":[{"constraints":["string"],"helpText":"insert keyword (string)"}]}]
+			},
+			{
+				"title":"set minute length property",
+				"components":["set variable ",{"userInput":[{"constraints":["var"],"helpText":"insert variable"}]}," max minute length ",{"userInput":[{"constraints":["number"],"helpText":"insert minutes (number)"}]}]
+			},
+			{
+				"title":"set category property",
+				"components":["set variable ",{"userInput":[{"constraints":["var"],"helpText":"insert variable"}]}," category property ",{"userInput":[{"constraints":["string"],"helpText":"insert category (string)"}]}]
+			},
+			{
+				"title":"set max count property",
+				"components":["set variable ",{"userInput":[{"constraints":["var"],"helpText":"insert variable"}]}," max count ",{"userInput":[{"constraints":["number"],"helpText":"insert count (number)"}]}]
+			}
+		]};
+
+var mediaObjectProperties =
+{"title":"initialize_object_with_properties",
+	"color":"lightpink",
+	"components":[
+		{
+			"title":"add property to object",
+			"components":[]
+		},
+		{
+			"title":"name this object",
+			"components":[{"userInput":[{"constraints":['string'],"helpText":"give this object a custom name"}]}]
+		},
+		{
+			"title": "property: keyword",
+			"components":["keyword ( ",{"userInput":[{"constraints":["array",["string"]],"helpText":"insert keyword(s) (string)"}]}," )"]
+		},
+		{
+			"title": "property: popular in year",
+			"components":["popular in year ( ",{"userInput":[{"constraints":["string","number"],"helpText":"insert keyword(s) (string)"}]}," )"]
+		},
+		//{
+		//	"title": "property: category",
+		//	"components":["category ( ",{"userInput":[{"constraints":["string"],"helpText":"insert category (string)"}]}," )"]
+		//},
+		{
+			"title": "property: max count",
+			"components":["max count ( ",{"userInput":[{"constraints":["number"],"helpText":"insert count (number)"}]}," )"]
+		},
+		{
+			"title": "property: released after date",
+			"components":["released after date ( ",{"userInput":[{"constraints":["date"],"helpText":"insert date (date object)"}]}," )"]
+		},
+		{
+			"title": "property: released before date",
+			"components":["released before date ( ",{"userInput":[{"constraints":["date"],"helpText":"insert date (date object)"}]}," )"]
+		}
+	]};

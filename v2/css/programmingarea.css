@@ -1,6 +1,6 @@
 #editor{
 	position:relative;
-	display:inline-block;
+	/*display:inline-block;*/
 	width:100%;
 	height:84%;
 	z-index:10;
@@ -101,5 +101,11 @@ form.script-form{
 	z-index:1100;
 }
 
+.bracket-drop{
+	display:block;
+	width:100%;
+	height:100px;
+	background-color:lightsteelblue;
+}
 
 
